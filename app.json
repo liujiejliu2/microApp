@@ -1,9 +1,11 @@
 {
   "pages": [
+    "pages/list/question",
     "pages/index/index",
     "pages/logs/logs",
     "pages/countdown/countdown",
     "pages/demo/demo"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
