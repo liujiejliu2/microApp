@@ -1,12 +1,23 @@
 // pages/list/question.js
 Page({
 
+//https://blog.csdn.net/kelisentian/article/details/72793158
+  click: function(e){
+    console.log(e.currentTarget.dataset.param)
+    console.log(e.detail.value)
+    this.setData({
+      ischecked: 'true'
+    })
+  },
   /**
    * 页面的初始数据
    */
   data: {
-  
+    ischecked:false,
+    optionArr:['秦朝','汉朝','南北朝','隋朝','唐朝','宋朝','元朝','当代']
   },
+
+ 
 
   /**
    * 生命周期函数--监听页面加载

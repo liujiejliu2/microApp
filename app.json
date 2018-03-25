@@ -1,10 +1,11 @@
 {
   "pages": [
-    "pages/list/question",
+    
     "pages/index/index",
     "pages/logs/logs",
     "pages/countdown/countdown",
-    "pages/demo/demo"
+    "pages/demo/demo",
+    "pages/question/question"
     
   ],
   "window": {

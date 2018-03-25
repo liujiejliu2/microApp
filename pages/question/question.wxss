@@ -1,0 +1,46 @@
+/* pages/list/question.wxss */
+
+.border-5{
+    text-align: center;
+    margin: 20rpx;
+    border: groove  10rpx;
+}
+
+.option{
+  width: 80%;
+  display: block;
+  text-align: left;
+  font-size: 15px;
+  color: #3333CC;
+  margin-top: 30px;
+  margin-left: 30px;
+  background-color: honeydew;
+  
+}
+
+.is_checked { 
+  border: 2px solid;
+}
+
+.question{
+  display: block;
+  text-align: 
+  left;font-size: 
+  20px;color: #000055;
+  margin-top: 50px;
+  margin-left: 20px;
+}
+
+.bd{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  background: url('https://sjbz-fd.zol-img.com.cn/t_s320x510c/g5/M00/00/03/ChMkJlfJVeWIYKb_AAwO2rMbZRwAAU96gDpb54ADA7y477.jpg') round ;
+  background-size: 100% 200%;
+  
+}

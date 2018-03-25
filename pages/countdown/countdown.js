@@ -6,7 +6,7 @@
  */
 
 // 定义一个总毫秒数，以一分钟为例。TODO，传入一个时间点，转换成总毫秒数
-var total_micro_second = 36 * 60 * 60 * 1000;
+var total_micro_second = 5 * 1000;
 
 /* 毫秒级倒计时 */
 function count_down(that) {
@@ -16,9 +16,10 @@ function count_down(that) {
   });
 
   if (total_micro_second <= 0) {
-    that.setData({
-      clock: "还犹豫什么？赶紧点击开始！"
-    });
+    wx.redirectTo({
+      url: '../question/question',
+    })
+   
     // timeout则跳出递归
     return;
   }
@@ -40,9 +41,9 @@ function date_format(micro_second) {
   // 秒位
   var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
   // 毫秒位，保留2位
-  var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
+  //var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
 
-  return hr + ":" + min + ":" + sec + " " + micro_sec;
+  return hr + ":" + min + ":" + sec ;//+ " " + micro_sec
 }
 
 // 位数不足补零
