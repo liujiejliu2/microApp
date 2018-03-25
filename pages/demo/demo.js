@@ -1,23 +1,13 @@
 // pages/demo/demo.js
-Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-
+Page({
+  
+  formSubmit: function(e){
+    console.log('form submit with data :', e.detail.value)
   },
 
-  /**
-   * 组件的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-
+  resetForm:function(e){
+    console.log('reset')
   }
+
+  
 })

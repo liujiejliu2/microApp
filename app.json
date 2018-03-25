@@ -2,12 +2,13 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
+    "pages/countdown/countdown",
     "pages/demo/demo"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "SS FXAG ASK&ANSWER",
     "navigationBarTextStyle": "black",
     "backgroundColorTop": "#eeeeee"
   }

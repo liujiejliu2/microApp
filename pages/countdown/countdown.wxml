@@ -1,0 +1,6 @@
+<text style="display: block;text-align: center;font-size: 25px;color: #f60;margin-top: 50px;">
+    活动开始倒计时：
+</text>
+<text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
+    {{clock}} {{micro_second}}
+</text>

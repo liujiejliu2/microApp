@@ -8,3 +8,18 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+.page_bd{
+  
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+  background: url('https://sjbz-fd.zol-img.com.cn/t_s320x510c/g5/M00/00/03/ChMkJ1fJVeWIPr0kAA64_sOQ3QgAAU96QPkjdUADrkW533.jpg') round ;
+  background-size: 100% 200%;
+}

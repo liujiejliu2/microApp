@@ -4,10 +4,8 @@ const app = getApp()
 
 Page({
   data: {
-    motto: '欢迎来到FXAG在线答题！赢取百万大奖，走上人生巅峰',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    motto: '请绑定您的员工号：',
+    userInfo: {}
   },
   //事件处理函数
   bindViewTap: function() {
@@ -15,7 +13,21 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+
+  bindViewDemo: function(){
+    wx.navigateTo({
+      url: '../demo/demo',
+    })
+  },
+
+  bindViewCountdown: function () {
+    wx.redirectTo({
+      url: '../countdown/countdown',
+    })
+  },
+
+  onLoad: function (e) {
+    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

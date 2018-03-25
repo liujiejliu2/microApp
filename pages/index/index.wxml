@@ -1,14 +1,21 @@
 <!--index.wxml-->
-<view class="container">
+<view class="page_bd">
+  
+  <view class="userinfo" style="display: block;text-align: center;font-size: 25px;color: #f60;margin-top: 2px;">
+      <text >欢迎你来到AG知识竞赛</text>
+  </view>
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
   </view>
+   
+
+  <!--<view id='tapDemo' bindtap='bindViewDemo'> demoPage</view>-->
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-    <text class="user-motto">{{motto}}</text>
+    <label><text class="user-motto">{{motto}}</text> <input name='input' placeholder='employ id'/></label>
+  </view>
+
+ <view class="usermotto">
+    <button class='btn-area' form-type='submit' bindtap='bindViewCountdown'>参与</button>
   </view>
 </view>
