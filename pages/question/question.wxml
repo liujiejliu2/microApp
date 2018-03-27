@@ -1,20 +1,15 @@
-<view class='bd'>
-<view>
-  <text class="question">
-    1. 刘备生于哪个朝代？
-  </text>
-</view>
 
 
-<view class='border-5' style='width:90%;' >
-  <scroll-view scroll-y="true" style='height:500px; word-break:break-all; width:100%'>.
-   <form bindsubmit='click' style='width:100%'>
-    <button form-type='submit'  wx:key='unique' wx:for="{{optionArr}}" wx:for-item="i" id='i' class='option' disabled="{{ischecked}}">{{i}}</button>
-    
-   
-    </form>
-  </scroll-view>
-</view>
+<view class='bd' >
+  <text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
+  {{clock}}
+</text>
+  <view class='question'>
+      {{q}}
+  </view>
 
+  <view  style='width:90%;' bindtap='click' data-index='{{index}}'  wx:for="{{options}}" wx:key='index' wx:for-item='i'>
+    <button class="option" hover-class='is_checked' style="{{index==selectedIndex?'background-color:yellow':''}}" hover-stay-time='700' disabled='{{ischecked}}'>{{index}} - {{i}}</button>
+  </view>
 
 </view>

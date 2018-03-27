@@ -1,10 +1,5 @@
 /* pages/list/question.wxss */
 
-.border-5{
-    text-align: center;
-    margin: 20rpx;
-    border: groove  10rpx;
-}
 
 .option{
   width: 80%;
@@ -18,9 +13,18 @@
   
 }
 
-.is_checked { 
-  border: 2px solid;
-}
+
+
+.is_checked{  
+  border: 1px solid #FE0002 ;  
+  color: #FE0002 ;  
+  background: #fff;  
+}  
+.normal{  
+  border: none;  
+  color: #333;  
+  background: #F0F1EC;  
+}  
 
 .question{
   display: block;

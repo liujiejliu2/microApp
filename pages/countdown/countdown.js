@@ -17,7 +17,7 @@ function count_down(that) {
 
   if (total_micro_second <= 0) {
     wx.redirectTo({
-      url: '../question/question',
+      url: '../question/question?id=1',
     })
    
     // timeout则跳出递归
