@@ -7,6 +7,11 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+
+
+    if (!wx.getStorageSync('questionIndex') ) {
+      wx.setStorageSync('score', '0')
+    } 
     if(wx.getStorageSync('questionIndex')){
       
     }else{
@@ -42,8 +47,8 @@ App({
    
   },
   globalData: {
-    userInfo: null,
-    questionIndex: '1',
-  }
+    userInfo: null
+  },
+
 })
 

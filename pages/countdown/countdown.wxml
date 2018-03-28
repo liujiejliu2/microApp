@@ -4,3 +4,7 @@
 <text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
     {{clock}} {{micro_second}}
 </text>
+
+<text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
+    此处请PO来设计该写什么！规则神马的
+</text>

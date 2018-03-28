@@ -2,10 +2,12 @@
   "pages": [
     
     "pages/index/index",
+    "pages/question/question",
     "pages/logs/logs",
     "pages/countdown/countdown",
     "pages/demo/demo",
-    "pages/question/question"
+    "pages/ending/ending"
+    
     
     
     
@@ -13,7 +15,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "I love FXAG",
+    "navigationBarTitleText": "I Love FXAG",
     "navigationBarTextStyle": "black",
     "backgroundColorTop": "#eeeeee"
   }

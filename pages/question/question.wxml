@@ -1,15 +1,23 @@
 
 
-<view class='bd' >
-  <text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
-  {{clock}}
+<view class='bd'>
+
+<view class='back'>
+
+  <progress percent='{{progress}}' stroke-width='12' active show-info style="display: block;text-align: left;font-size: 10px;color: #EE7AE9;margin-top: 50px;width:50%" ></progress>
+  <text style="display: block;text-align: left;font-size: 13px;color: #EE7AE9;margin-top: 10px;">当前积分：{{currscore}}</text>
+
+
+</view>
+  <text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 10px;">
+  倒计时{{clock==''?10:clock}}秒
 </text>
   <view class='question'>
-      {{q}}
+    {{q}}
   </view>
 
-  <view  style='width:90%;' bindtap='click' data-index='{{index}}'  wx:for="{{options}}" wx:key='index' wx:for-item='i'>
-    <button class="option" hover-class='is_checked' style="{{index==selectedIndex?'background-color:yellow':''}}" hover-stay-time='700' disabled='{{ischecked}}'>{{index}} - {{i}}</button>
+  <view style='width:90%;' bindtap='click' data-index='{{index}}' wx:for="{{options}}" wx:key='index' wx:for-item='i'>
+    <button class="option" hover-class='is_checked' style="{{index==selectedIndex?finalColor:''}}" hover-stay-time='700' disabled='{{ischecked}}'>{{index}} - {{i}}</button>
   </view>
 
 </view>

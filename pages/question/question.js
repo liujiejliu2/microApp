@@ -11,25 +11,25 @@ Page({
     clock: '',
     ischecked:'',
     questions:[
-      { 'q': '刘备出生在哪里？', 'a': '北京', 'b': '南京', 'c': '东京', 'd': '中国','f':'d'},
-      { 'q': '刘备出生在哪个朝代？', 'a': '秦朝', 'b': '汉朝', 'c': '三国', 'd': '元朝', 'f': 'b' },
-      { 'q': '熊黛林的英文名叫什么？', 'a': 'Bear dailin', 'b': 'Xiong Dailin', 'c': 'Dailin Xiong', 'd': 'Jack Ma', 'f': 'c' },
-      { 'q': '大白熊是什么动物的品种？', 'a': '狗', 'b': '猪', 'c': '猫', 'd': '人', 'f': 'a', 'end':'1'}
+      { 'q': '刘备出生在哪里？', 'A': '北京', 'B': '南京', 'C': '东京', 'D': '中国','F':'D'},
+      { 'q': '刘备出生在哪个朝代？', 'A': '秦朝', 'B': '汉朝', 'C': '三国', 'D': '元朝', 'F': 'B' },
+      { 'q': '熊黛林的英文名叫什么？', 'A': 'Bear dailin', 'B': 'Xiong Dailin', 'C': 'Dailin Xiong', 'D': 'Jack Ma', 'F': 'C' },
+      { 'q': '大白熊是什么动物的品种？', 'A': '狗', 'B': '猪', 'C': '猫', 'D': '人', 'F': 'A', 'end':'1'}
     ],
     q:'',
     options:['A','B','C','D'],
     F:'',
-    selectedIndex:''
+    selectedIndex:'',
+    finalColor:'background-color:yellow',
+    currscore:'0',
+    progress:'0'
   },
 
  
   
   click: function(args){
     
-    if (this.data.ischecked == '') {
-      wx.setStorageSync('questionIndex', Number(wx.getStorageSync('questionIndex') + 1))
-    }
-    console.info('new number is ' + wx.getStorageSync('questionIndex'))
+    
     this.setData({
       selectedIndex: args.currentTarget.dataset.index,
       ischecked: 'true',
@@ -40,7 +40,6 @@ Page({
       console.log('End Page');
       return;
     }
-   
   },
 
   hide: function () {
@@ -58,25 +57,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (args) {
-    console.log(this.data.questions.length)
+    
+    
     if (wx.getStorageSync('questionIndex') >= this.data.questions.length) {
       console.log('reset')
-      wx.setStorageSync('questionIndex','1')
+      wx.setStorageSync('questionIndex','0')
+      wx.setStorageSync('score', '0')
     }
     console.log('incoming number is ' + wx.getStorageSync('questionIndex'));
     count_down(this);
     
-    
     var thisq = this.data.questions[wx.getStorageSync('questionIndex')];
     this.setData({
+      progress: (wx.getStorageSync('questionIndex')+1) / this.data.questions.length*100,
       clock:'',
       'q': thisq.q,
-      'options.A': thisq.a,
-      'options.B': thisq.b,
-      'options.C': thisq.c,
-      'options.D': thisq.d,
-      'F': thisq.f,
-      
+      'options.A': thisq.A,
+      'options.B': thisq.B,
+      'options.C': thisq.C,
+      'options.D': thisq.D,
+      'F': thisq.F,
+      currscore:wx.getStorageSync('score')
     })
     if (thisq.end != undefined){
       wx.setStorageSync('endInd','1')
@@ -145,25 +146,48 @@ Page({
  */
 
 // 定义一个总毫秒数，以一分钟为例。TODO，传入一个时间点，转换成总毫秒数
-var total_micro_second = 15 * 1000;
+var totalNum = 10;
+var total_micro_second = totalNum * 1000;
 
 /* 毫秒级倒计时 */
 function count_down(that) {
-  
-  
   
   // 渲染倒计时时钟
   that.setData({
     clock: date_format(total_micro_second)
   });
-  
+  if (total_micro_second <= 500) {
+    
+    console.log('color is ' + that.data.finalColor)
+    if (that.data.selectedIndex == that.data.F) {
+      that.setData({
+        finalColor: 'background-color:greenyellow'
+      })
+      if (that.data.ischecked == 'true') {
+          console.info('score +=1')
+          wx.setStorageSync('score', Number(wx.getStorageSync('score'))+1)
+      }
+    } else {
+      that.setData({
+        finalColor: 'background-color:red'
+      })
+    }
+    
+  }
   if (total_micro_second <= 0) {
+    total_micro_second = totalNum * 1000;
+    wx.setStorageSync('questionIndex', Number(wx.getStorageSync('questionIndex') + 1))
     if (wx.getStorageSync('endInd') == '1') {
       console.log('no more count')
       wx.setStorageSync('endInd', '')
-      return
+      wx.redirectTo({
+        url: '../ending/ending',
+      })
+      return;
     } 
-    total_micro_second = 15 * 1000;
+    
+    
+
     wx.redirectTo({
       url: '../question/question',
     })

@@ -13,8 +13,6 @@
   
 }
 
-
-
 .is_checked{  
   border: 1px solid #FE0002 ;  
   color: #FE0002 ;  
@@ -34,7 +32,13 @@
   margin-top: 50px;
   margin-left: 20px;
 }
-
+.back{
+  width: 100%;
+  align-items: baseline;
+justify-content: center;
+display: flex;
+flex-direction: row;
+}
 .bd{
   width: 100%;
   height: 100%;
