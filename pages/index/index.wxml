@@ -2,7 +2,7 @@
 <view class="page_bd">
   
   <view class="userinfo" style="display: block;text-align: center;font-size: 25px;color: #f60;margin-top: 2px;">
-      <text >欢迎你来到AG知识竞赛</text>
+      <text >欢迎FX大富翁</text>
   </view>
   <view class="userinfo">
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -12,7 +12,7 @@
 
   <!--<view id='tapDemo' bindtap='bindViewDemo'> demoPage</view>-->
   <view class="usermotto">
-    <label><text class="user-motto">{{motto}}</text> <input name='input' placeholder='employ id'/></label>
+    <label><text class="user-motto">{{motto}}</text> <input name='input' placeholder='姓名'/></label>
   </view>
 
  <view class="usermotto">

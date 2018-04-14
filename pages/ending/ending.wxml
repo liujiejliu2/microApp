@@ -1,3 +1,8 @@
 兄弟，你的最终得分是{{finalScore}}分！
 
 此处请PO来设计该写什么！
+
+
+<view style='margin-top: 200px;'>
+  <button style='background-color: honeydew' bindtap='clearAll'>重置本次问答</button>
+</view>

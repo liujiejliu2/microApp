@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    motto: '请绑定您的员工号：',
+    motto: '请绑定您的姓名：',
     userInfo: {}
   },
   //事件处理函数
@@ -27,7 +27,15 @@ Page({
   },
 
   onLoad: function (e) {
-    
+  
+    if (wx.getStorageSync('started')!="") {
+     
+      wx.redirectTo({
+        url: '../ending/ending',
+      })
+      return;
+    }
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

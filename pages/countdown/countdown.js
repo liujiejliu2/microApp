@@ -8,6 +8,10 @@
 // 定义一个总毫秒数，以一分钟为例。TODO，传入一个时间点，转换成总毫秒数
 var total_micro_second = 5 * 1000;
 
+
+
+
+
 /* 毫秒级倒计时 */
 function count_down(that) {
   // 渲染倒计时时钟
@@ -51,11 +55,15 @@ function fill_zero_prefix(num) {
   return num < 10 ? "0" + num : num
 }
 
+
+
 Page({
   data: {
     clock: ''
   },
+
   onLoad: function () {
+    
     count_down(this);
-  }
+  },
 });
