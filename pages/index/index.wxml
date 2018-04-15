@@ -18,4 +18,5 @@
  <view class="usermotto">
     <button class='btn-area' form-type='submit' bindtap='bindViewCountdown'>参与</button>
   </view>
+  
 </view>

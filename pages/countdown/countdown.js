@@ -6,14 +6,12 @@
  */
 
 // 定义一个总毫秒数，以一分钟为例。TODO，传入一个时间点，转换成总毫秒数
-var total_micro_second = 5 * 1000;
 
-
-
-
+var total_micro_second ;
 
 /* 毫秒级倒计时 */
 function count_down(that) {
+  
   // 渲染倒计时时钟
   that.setData({
     clock: date_format(total_micro_second)
@@ -29,9 +27,9 @@ function count_down(that) {
   }
   setTimeout(function () {
     // 放在最后--
-    total_micro_second -= 10;
+    total_micro_second -= 100;
     count_down(that);
-  }, 10)
+  }, 100)
 }
 
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次
@@ -62,8 +60,27 @@ Page({
     clock: ''
   },
 
+  onShow:function(){
+    var timeline = new Date();
+    var now = new Date();
+    timeline.setMinutes(Math.ceil(timeline.getMinutes() / 3) * 3);
+    if (timeline.getMinutes() == now.getMinutes()) {
+      timeline.setMinutes(timeline.getMinutes() + 3);
+    }
+    timeline.setSeconds(0);
+    total_micro_second = timeline - new Date();
+    console.info(total_micro_second)
+  },
   onLoad: function () {
-    
+    var timeline = new Date();
+    var now = new Date();
+    timeline.setMinutes(Math.ceil(timeline.getMinutes() / 3) * 3);
+    if (timeline.getMinutes() == now.getMinutes()) {
+      timeline.setMinutes(timeline.getMinutes() + 3);
+    }
+    timeline.setSeconds(0);
+    total_micro_second = timeline - new Date();
+    console.info(total_micro_second)
     count_down(this);
   },
 });

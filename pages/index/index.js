@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    motto: '请绑定您的姓名：',
+    motto: '请输入真实姓名：',
     userInfo: {}
   },
   //事件处理函数
@@ -70,5 +70,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+  
 })

@@ -29,4 +29,5 @@
   height: 88rpx;
   align-items: center;
   background-color: burlywood;
+
 }

@@ -7,27 +7,37 @@ Page({
    * 页面的初始数据
    */
   data: {
-    clock: 16,
+    clock: 11,
     ischecked:'',
     questions:[
-      { 'q': '刘备出生在哪里？', 'A': '北京', 'B': '南京', 'C': '东京', 'D': '中国','F':'D'},
-      { 'q': '刘备出生在哪个朝代？', 'A': '秦朝', 'B': '汉朝', 'C': '三国', 'D': '元朝', 'F': 'B' },
-      { 'q': '熊黛林的英文名叫什么？', 'A': 'Bear dailin', 'B': 'Xiong Dailin', 'C': 'Dailin Xiong', 'D': 'Jack Ma', 'F': 'C' },
-      { 'q': '大白熊是什么动物的品种？', 'A': '狗', 'B': '猪', 'C': '猫', 'D': '人', 'F': 'A', 'end':'1'}
+      
+      { 'q': '工笔是哪种绘画形式的技法？', 'A': '水彩画', 'B': '油画', 'C': '水粉画', 'D': '国画','F':'D'},
+      { 'q': '人体含水量百分比最高的器官是？', 'A': '肝', 'B': '肾', 'C': '眼球', 'D': '心脏', 'F': 'C' },
+      { 'q': '中国民间“送灶神”时要吃粘牙的甜食，这是为了？', 'A': '容易打发小孩子', 'B': '是灶神喜欢的食品', 'C': '甜为吉利', 'D': '用糖粘住灶神的牙', 'F': 'D' },
+      { 'q': '清朝晚期,被今人誉为"开眼看世界第一人"的是谁？', 'A': '魏源', 'B': '龚自珍', 'C': '林则徐', 'D': '严复', 'F': 'C' },
+      { 'q': '下面属于可再生能源的是？', 'A': '太阳能', 'B': '电力', 'C': '煤炭', 'D': '石油', 'F': 'A' },
+      { 'q': '以下哪种方法是节约用水的好办法？', 'A': '用公司的水', 'B': '在厕所水箱里放一块砖头', 'C': '让水龙头滴水不走水表', 'D': '不上厕所', 'F': 'B' },
+      { 'q': '《在那遥远的地方》是哪里的民歌？', 'A': '四川民歌', 'B': '江苏民歌', 'C': '青海民歌', 'D': '云南民歌', 'F': 'C' },
+      { 'q': '下列地点与电影奖搭配不正确的是？', 'A': '柏林-圣马克金狮', 'B': '戛纳-金棕榈', 'C': '洛杉矶-奥斯卡', 'D': '中国-金鸡', 'F': 'A' },
+      { 'q': '下面哪种酸，人在品尝时不是酸味的？', 'A': '琥珀酸', 'B': '苹果酸', 'C': '柠檬酸', 'D': '单宁酸', 'F': 'D' },
+      { 'q': '飞机票头等舱的票价一般为普通舱票价的？', 'A': '200%', 'B': '180%', 'C': '150%', 'D': '130%', 'F': 'C' },
+      { 'q': '世界上最高的立式佛像--巴米杨佛在哪个国家？', 'A': '印度尼西亚', 'B': '伊拉克', 'C': '阿富汗', 'D': '尼泊尔', 'F': 'C' },
+      { 'q': '新中国成立后,第一次参加奥运会是在哪一年？', 'A': '1952 ', 'B': '1956', 'C': '1980 ', 'D': '1984', 'F': 'A', 'end':'1'}
     ],
-    q:'',
+    qContent:'',
     options:['A','B','C','D'],
     F:'',
     selectedIndex:'',
     finalColor:'background-color:yellow',
     currscore:'0',
     progress:'0',
-    wxTimerList: {}
+    wxTimerList: {},
+    alive:''
   },
 
  
   
-  click: function(args){    
+  click: function(args){
     this.setData({
       selectedIndex: args.currentTarget.dataset.index,
       ischecked: 'true'
@@ -38,17 +48,11 @@ Page({
       return;
     }
   },
-
-  hide: function () {
-    var vm = this
-    var interval = setInterval(function () {
-      if (vm.data.winH > 0) {
-        //清除interval 如果不清除interval会一直往上加
-        clearInterval(interval)
-        vm.setData({ winH: vm.data.winH - 5, opacity: vm.data.winH / winHeight })
-        vm.hide()
-      }
-    }, 10);
+  
+  onHide: function () {
+    wx.setStorageSync('exit', 1)
+    console.info('hide');
+    return;
   },
 
   timerCount:function(that){
@@ -102,18 +106,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (args) {
+    if (wx.getStorageSync('exit')==1){
+      wx.redirectTo({
+        url: '../ending/ending',
+      })
+      return;
+    }
     if (wx.getStorageSync('started')==""){
       wx.setStorageSync('started',1)
     }
     if (wx.getStorageSync('questionIndex') == 0) {
-      console.log('reset')
-      wx.setStorageSync('questionIndex','0')
-      wx.setStorageSync('score', '0')
       wx.setStorageSync('chance', 2)
+      console.log('reset')
+      wx.setStorageSync('score', 0)
+      wx.setStorageSync('questionIndex', 0)
     }
     if ( wx.getStorageSync('chance')<1){
       this.setData({
         ischecked: 'true',
+        alive: '没有机会了！现在你只能看着别人玩了！',
       })
     }else{
       this.setData({
@@ -121,14 +132,10 @@ Page({
       })
     }
     this.timerCount(this);
-    // count_down(this);
-    
-    
     var thisq = this.data.questions[wx.getStorageSync('questionIndex')];
     this.setData({
-      progress: (wx.getStorageSync('questionIndex')+1) / this.data.questions.length*100,
-      clock:'',
-      'q': thisq.q,
+      progress: wx.getStorageSync('questionIndex')+1,
+      qContent: thisq.q,
       'options.A': thisq.A,
       'options.B': thisq.B,
       'options.C': thisq.C,
@@ -142,145 +149,8 @@ Page({
     } 
     
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    this.hide()
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
-
-
    
 })
-
-/** 
- * 需要一个目标日期，初始化时，先得出到当前时间还有剩余多少秒
- * 1.将秒数换成格式化输出为XX天XX小时XX分钟XX秒 XX
- * 2.提供一个时钟，每10ms运行一次，渲染时钟，再总ms数自减10
- * 3.剩余的秒次为零时，return，给出tips提示说，已经截止
- */
-
-// 定义一个总毫秒数，以一分钟为例。TODO，传入一个时间点，转换成总毫秒数
-var totalNum = 10;
-var total_micro_second = totalNum * 1000;
-
-/* 毫秒级倒计时 */
-function count_down(that) {
-  
-  // 渲染倒计时时钟
-  that.setData({
-    clock: date_format(total_micro_second)
-  });
-  if (total_micro_second <= 500) {
-    
-    console.log('color is ' + that.data.finalColor)
-    if (that.data.selectedIndex == that.data.F) {
-      that.setData({
-        finalColor: 'background-color:greenyellow'
-      })
-      if (that.data.ischecked == 'true') {
-          console.info('score +=1')
-          wx.setStorageSync('score', Number(wx.getStorageSync('score'))+1)
-      }
-    } else {
-      if (wx.getStorageSync('chance')>0){
-        wx.setStorageSync('chance', wx.getStorageSync('chance') - 1)
-      }
-      that.setData({
-        finalColor: 'background-color:red'
-      })
-    }
-    
-  }
-  if (total_micro_second <= 0) {
-    total_micro_second = totalNum * 1000;
-    wx.setStorageSync('questionIndex', Number(wx.getStorageSync('questionIndex') + 1))
-    if (wx.getStorageSync('endInd') == '1') {
-      console.log('no more count')
-      wx.setStorageSync('endInd', '')
-      wx.redirectTo({
-        url: '../ending/ending',
-      })
-      return;
-    } 
-
-    wx.redirectTo({
-      url: '../question/question',
-    })
- 
-    return;
-  }
-  setTimeout(function () {
-    // 放在最后--
-    total_micro_second -= 1000;
-    count_down(that);
-  }, 1000)
-}
-
-// 时间格式化输出，如03:25:19 86。每10ms都会调用一次
-function date_format(micro_second) {
-  // 秒数
-  var second = Math.floor(micro_second / 1000);
-  // 小时位
-  var hr = Math.floor(second / 3600);
-  // 分钟位
-  var min = fill_zero_prefix(Math.floor((second - hr * 3600) / 60));
-  // 秒位
-  var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
-  // 毫秒位，保留2位
-  //var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
-  return sec;//+ " " + micro_sec
-}
-
-// 位数不足补零
-function fill_zero_prefix(num) {
-  return num < 10 ? "0" + num : num
-}
-
-
 
 var wxTimer = function (initObj) {
   initObj = initObj || {};
