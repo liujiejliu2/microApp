@@ -1,10 +1,18 @@
-<text style="display: block;text-align: center;font-size: 25px;color: #f60;margin-top: 50px;">
-    活动开始倒计时：
-</text>
-<text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
-    {{clock}} {{micro_second}}
-</text>
+<view class="bg">
+<image src="../pic/rule.png" bindLoad="imageLoad" mode="aspectFit"/>
 
+<view>
 <text style="display: block;text-align: center;font-size: 20px;color: #f60;margin-top: 50px;">
-    此处请PO来设计该写什么！规则神马的
+    活动开始倒计时：{{wxTimer}}
 </text>
+</view>
+
+<view>
+<text style="display: block;text-align: left;font-size: 14px;color: #4C0044;margin-top: 30px;padding-left : 30px;padding-right : 30px;">
+    比赛规则：
+    本场比赛共12道题,每题答题时间为20秒，答错或者不答都视为答错，至多允许答错一题。参赛者答错第二题将自动出局。
+    坚持到答对最后一题的全部参与者瓜分本场奖金。
+    答错中途出局的参赛者可以保留本场积分,待年终时计算全年积分。
+</text>
+</view>
+</view>

@@ -1,8 +1,18 @@
-兄弟，你的最终得分是{{finalScore}}分！
-
-此处请PO来设计该写什么！
 
 
-<view style='margin-top: 200px;'>
-  <button style='background-color: honeydew' bindtap='clearAll'>重置本次问答</button>
+
+
+<view class="bg" >
+  <image src="../pic/final.png" />
+  <view style="font-size: 17px;color: #4C0044;margin-top: 30px;padding-left : 30px; font-weight:bold;padding-right : 30px; etter-spacing:5px;">
+  <text >
+  <!-- 本场奖金：{{finalScore}}元 -->
+  本场积分：{{finalScore}}分
+  <!-- 累计积分：{{finalScore}}分
+  排名：第{{finalScore}}名 -->
+  </text>
+  <view><button style='background-color: honeydew' bindtap='clearAll'>重置本次问答</button></view>
+  </view>
+  
 </view>
+ 

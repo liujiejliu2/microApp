@@ -1,0 +1,16 @@
+.bg{
+  background: #CF553E;
+
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.bg{
+  display:flex;
+
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+}
