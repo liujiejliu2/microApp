@@ -9,7 +9,7 @@
 
 var total_micro_second ;
 var px2rpx = 2, windowWidth = 375;
-
+var myTimer;
 var wxTimer = function (initObj) {
   initObj = initObj || {};
   this.beginTime = initObj.beginTime || "00:00:00";	//开始时间
@@ -24,11 +24,13 @@ var wxTimer = function (initObj) {
 }
 
 wxTimer.prototype = {
+  
   //开始
   start: function (self) {
     this.endTime = new Date("1970/01/01 " + this.beginTime).getTime();//1970年1月1日的00：00：00的字符串日期
     this.endSystemTime = new Date(Date.now() + this.endTime);
     var mydata = this;
+    myTimer = this;
     //开始倒计时
     var count = 0;//这个count在这里应该是表示s数，js中获得时间是ms，所以下面*1000都换成ms
     function begin() {
@@ -37,7 +39,7 @@ wxTimer.prototype = {
       var tmpTimeStr = tmpTime.toString().substr(16, 8);//去掉前面的年月日就剩时分秒了
       var wxTimerSecond = (tmpTime.getTime() - new Date("1970/01/01 00:00:00").getTime()) / 1000;
       var wxTimerList = self.data.wxTimerList;
-
+      
       //更新计时器数组
       wxTimerList[mydata.name] = {
         wxTimer: tmpTimeStr,
@@ -52,6 +54,11 @@ wxTimer.prototype = {
       //时间间隔执行函数
       if (0 == (count - 1) % mydata.interval && mydata.intervalFn) {
         mydata.intervalFn();
+      }
+      if (10 == wxTimerSecond){
+        self.setData({
+          prepare:true
+        });
       }
       //结束执行函数
       if (wxTimerSecond <= 0) {
@@ -70,40 +77,132 @@ wxTimer.prototype = {
   },
   //校准
   calibration: function () {
-    this.endTime = this.endSystemTime - Date.now();
+    this.endTime = this.endSystemTime - (Date.now()) ;
   }
 }
 
-
+var wxTimer1;
 Page({
   data: {
     clock: '59',
     wxTimerList: {},
-    imageSize: {}
+    imageSize: {},
+    prepare:false
   },
 
   timerCount: function (that) {
-    var wxTimer1 = new wxTimer({
+    wxTimer1 = new wxTimer({
       beginTime: this.data.clock,
+      name: 'countDown',
       complete: function () {
         wx.redirectTo({
           url: '../question/question?id=1',
         })
-      },
+      }, 
     })
     wxTimer1.start(this);
   },
   
-  onShow:function(){
-    var timeline = new Date();
+  countNow:function(){
+    var timelineStr = this.data.startTime
+    var splitTime = timelineStr.split(" ");
+    var arr1 = splitTime[1].split(":");
+    var sdate = splitTime[0].split('-');
+    var timeline = new Date(sdate[0], sdate[1] - 1, sdate[2], arr1[0], arr1[1], arr1[2])
+
     var now = new Date();
-    timeline.setMinutes(Math.ceil(timeline.getMinutes() / 5) * 5);
+    timeline.setMinutes(Math.ceil(timeline.getMinutes() / 1) * 1);
     if (timeline.getMinutes() == now.getMinutes()) {
-      timeline.setMinutes(timeline.getMinutes() + 3);
+      timeline.setMinutes(timeline.getMinutes() + 1);
     }
     timeline.setSeconds(0);
-    total_micro_second = timeline - new Date();
-    console.info(total_micro_second)
+    var now = new Date();
+    now.setMilliseconds(0)
+    this.setData({
+      timeline: timeline,
+    });
+    total_micro_second = (timeline - now) / 1000;
+    console.log("timeline is " + total_micro_second)
+    var t;
+    if (total_micro_second > -1) {
+      var hour = Math.floor(total_micro_second / 3600);
+      var min = Math.floor(total_micro_second / 60) % 60;
+      var sec = total_micro_second % 60;
+      if (hour < 10) {
+        t = '0' + hour + ":";
+      } else {
+        t = hour + ":";
+      }
+
+      if (min < 10) { t += "0"; }
+      t += min + ":";
+      if (sec < 10) { t += "0"; }
+      t += sec;
+    }
+    this.setData({
+      clock: t
+    });
+    this.timerCount(this);
+  
+  },
+  onShow:function(){
+    var current = this;
+    wx.request({
+      url: 'https://119759737.fxdafuweng.club/weapp/getSchedule',
+      success: function (res) {
+        if (res.data.data == undefined) {
+          console.log("error!")
+        } else {
+          wx.setStorageSync('bonus', res.data.data.msg.bonus)
+          wx.setStorageSync('groupUrl', res.data.data.msg.groupUrl)
+          current.setData({
+            startTime: res.data.data.msg.startTime,
+            bouns: res.data.data.msg.bonus,
+            qinterval: res.data.data.msg.qinterval
+          });
+          wx.setStorageSync('testInd', res.data.data.msg.testind)
+          wx.setStorageSync('qinterval', res.data.data.msg.qinterval)
+          wx.getSystemInfo({
+            success: function (res) {
+              windowWidth = res.windowWidth;
+              px2rpx = 750 / windowWidth;
+            }
+          })
+
+          if (myTimer != undefined) {
+            myTimer.stop()
+          }
+          current.countNow()
+
+          var name = wx.getStorageSync('myInfo').name
+          wx.request({
+            url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
+            data: {          //参数为json格式数据
+              userName: name,
+              status: 1,
+            },
+            success: function (res) {
+            }
+          })
+          wx.request({
+            url: 'https://119759737.fxdafuweng.club/weapp/getQuestions',
+
+            success: function (res) {
+              wx.removeStorageSync('questionList')
+              console.info(res.data.data.msg)
+              wx.setStorageSync('questionList', res.data.data.msg)
+              current.setData({
+                qsize: res.data.data.msg.length,
+              });
+            }
+          })
+        }
+      }
+    })
+    // if (myTimer!=undefined){
+    //   myTimer.stop()
+    //   this.countNow()
+    // }
   },
 
   imageLoad: function (e) {
@@ -137,41 +236,5 @@ Page({
   },
 
   onLoad: function () {
-    wx.getSystemInfo({
-      success: function (res) {
-        windowWidth = res.windowWidth;
-        px2rpx = 750 / windowWidth;
-      }
-    })
-
-    var timeline = new Date();
-    var now = new Date();
-    timeline.setMinutes(Math.ceil(timeline.getMinutes() / 5) * 5);
-    if (timeline.getMinutes() == now.getMinutes()) {
-      timeline.setMinutes(timeline.getMinutes() + 5);
-    }
-    timeline.setSeconds(0);
-    total_micro_second = (timeline - new Date())/1000;
-    var t;
-    if (total_micro_second > -1) {
-      var hour = Math.floor(total_micro_second / 3600);
-      var min = Math.floor(total_micro_second / 60) % 60;
-      var sec = total_micro_second % 60;
-      if (hour < 10) {
-        t = '0' + hour + ":";
-      } else {
-        t = hour + ":";
-      }
-
-      if (min < 10) { t += "0"; }
-      t += min + ":";
-      if (sec < 10) { t += "0"; }
-      t += sec;
-    }
-    
-    this.setData({
-      clock: t
-    });
-    this.timerCount(this);
   },
 });

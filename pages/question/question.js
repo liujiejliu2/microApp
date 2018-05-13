@@ -7,32 +7,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    clock: 11,
+    clock: (wx.getStorageSync('qinterval')+1),
     ischecked:'',
-    questions:[
-      
-      { 'q': '工笔是哪种绘画形式的技法？', 'A': '水彩画', 'B': '油画', 'C': '水粉画', 'D': '国画','F':'D'},
-      { 'q': '人体含水量百分比最高的器官是？', 'A': '肝', 'B': '肾', 'C': '眼球', 'D': '心脏', 'F': 'C' },
-      { 'q': '中国民间“送灶神”时要吃粘牙的甜食，这是为了？', 'A': '容易打发小孩子', 'B': '是灶神喜欢的食品', 'C': '甜为吉利', 'D': '用糖粘住灶神的牙', 'F': 'D' },
-      { 'q': '清朝晚期,被今人誉为"开眼看世界第一人"的是谁？', 'A': '魏源', 'B': '龚自珍', 'C': '林则徐', 'D': '严复', 'F': 'C' },
-      { 'q': '下面属于可再生能源的是？', 'A': '太阳能', 'B': '电力', 'C': '煤炭', 'D': '石油', 'F': 'A' },
-      { 'q': '以下哪种方法是节约用水的好办法？', 'A': '用公司的水', 'B': '在厕所水箱里放一块砖头', 'C': '让水龙头滴水不走水表', 'D': '不上厕所', 'F': 'B' },
-      { 'q': '《在那遥远的地方》是哪里的民歌？', 'A': '四川民歌', 'B': '江苏民歌', 'C': '青海民歌', 'D': '云南民歌', 'F': 'C' },
-      { 'q': '下列地点与电影奖搭配不正确的是？', 'A': '柏林-圣马克金狮', 'B': '戛纳-金棕榈', 'C': '洛杉矶-奥斯卡', 'D': '中国-金鸡', 'F': 'A' },
-      { 'q': '下面哪种酸，人在品尝时不是酸味的？', 'A': '琥珀酸', 'B': '苹果酸', 'C': '柠檬酸', 'D': '单宁酸', 'F': 'D' },
-      { 'q': '飞机票头等舱的票价一般为普通舱票价的？', 'A': '200%', 'B': '180%', 'C': '150%', 'D': '130%', 'F': 'C' },
-      { 'q': '世界上最高的立式佛像--巴米杨佛在哪个国家？', 'A': '印度尼西亚', 'B': '伊拉克', 'C': '阿富汗', 'D': '尼泊尔', 'F': 'C' },
-      { 'q': '新中国成立后,第一次参加奥运会是在哪一年？', 'A': '1952 ', 'B': '1956', 'C': '1980 ', 'D': '1984', 'F': 'A', 'end':'1'}
-    ],
+    questions: wx.getStorageSync('questionList'),
     qContent:'',
     options:['A','B','C','D'],
-    F:'',
+    F:'W',
     selectedIndex:'',
     finalColor:'background-color:yellow',
     currscore:'0',
     progress:'0',
     wxTimerList: {},
-    alive:''
+    alive:'',
+    activeCount:''
   },
 
  
@@ -51,7 +38,21 @@ Page({
   
   onHide: function () {
     wx.setStorageSync('exit', 1)
+    wx.setStorageSync('isAlive', 0)
+    var name = wx.getStorageSync('myInfo').name
+    wx.request({
+      url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
+      data: {          //参数为json格式数据
+        userName: name,
+        status: 0,
+      },
+      success: function (res) {
+      }
+    })
     console.info('hide');
+    wx.redirectTo({
+      url: '../ending/ending',
+    })
     return;
   },
 
@@ -76,6 +77,9 @@ Page({
         },
         interval: this.data.clock -1,
         intervalFn: function () {
+          if (wx.getStorageSync('exit', 1)){
+            wxTimer1.stop()
+          }
           if (wx.getStorageSync('firstInterval')==""){
             wx.setStorageSync('firstInterval',1);
             return;
@@ -96,9 +100,21 @@ Page({
             that.setData({
               finalColor: 'background-color:red'
             })
+            if (wx.getStorageSync('chance') < 1) {
+              var name = wx.getStorageSync('myInfo').name
+              wx.setStorageSync('isAlive', 0)
+              wx.request({
+                url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
+                data: {          //参数为json格式数据
+                  userName: name,
+                  status: 0,
+                },
+                success: function (res) {
+                }
+              })
+            }
           }
         }
-
     })
     wxTimer1.start(this);
   },
@@ -106,7 +122,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (args) {
+    this.setData({
+      clock: wx.getStorageSync('qinterval') + 1,
+    })
     if (wx.getStorageSync('exit')==1){
+      wx.setStorageSync('isAlive',0)
       wx.redirectTo({
         url: '../ending/ending',
       })
@@ -117,13 +137,16 @@ Page({
     }
     if (wx.getStorageSync('questionIndex') == 0) {
       wx.setStorageSync('chance', 2)
+      wx.setStorageSync('isAlive', 1)
       console.log('reset')
       wx.setStorageSync('score', 0)
       wx.setStorageSync('questionIndex', 0)
+      
     }
     if ( wx.getStorageSync('chance')<1){
       this.setData({
         ischecked: 'true',
+        selectedIndex:'',
         alive: '没有机会了！现在你只能看着别人玩了！',
       })
     }else{
@@ -132,7 +155,28 @@ Page({
       })
     }
     this.timerCount(this);
-    var thisq = this.data.questions[wx.getStorageSync('questionIndex')];
+  
+    var current=this
+    //获取当前存活玩家
+    wx.request({
+      url: 'https://119759737.fxdafuweng.club/weapp/activeUser',
+      success: function (res) {
+        current.setData({
+          activeCount: res.data.data.msg[0].count
+        })
+      }
+    })
+
+    var currentIndex = wx.getStorageSync('questionIndex');
+    
+    if (this.data.questions==''){
+      current.setData({
+        questions: wx.getStorageSync('questionList')
+      })
+    }
+    console.info("question size is " + this.data.questions.length)
+    var thisq = this.data.questions[currentIndex];
+    
     this.setData({
       progress: wx.getStorageSync('questionIndex')+1,
       qContent: thisq.q,
@@ -144,10 +188,9 @@ Page({
       currscore:wx.getStorageSync('score'),
       mychance: wx.getStorageSync('chance')-1
     })
-    if (thisq.end != undefined){
+    if ((wx.getStorageSync('questionIndex') + 1) == this.data.questions.length){
       wx.setStorageSync('endInd','1')
     } 
-    
   },
    
 })

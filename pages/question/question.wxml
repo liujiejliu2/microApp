@@ -9,12 +9,18 @@
   <text style="font-family: impact, sans-serif;color: #BFB715;font-size: 13px;font-weight: bold;text-align: center;letter-spacing: 0.2pt">复活卡：{{mychance<1?0:1}}</text>
 
 </view>
-  <text>{{alive}}</text>
+<view class='back'>
+
+  <text style="font-family: impact, sans-serif;color: #D2691E;font-size: 13px;font-weight: bold;text-align: center;letter-spacing: 0.2pt">累计总积分: {{currscore}}</text>
+  <text style="font-family: impact, sans-serif;color:	#A52A2A;font-size: 13px;font-weight: bold;text-align: center;letter-spacing: 0.2pt">存活玩家：{{activeCount}}</text>
+
+</view>
+  <text style="font-family: impact, sans-serif;color:	#556B2F;font-size: 13px;font-weight: bold;text-align: center;letter-spacing: 0.2pt">{{alive}}</text>
   <text style="width:90%;font-family: impact, sans-serif;color: #CC1D69;font-size: 22px;font-weight: bold;text-align: center;">
   倒计时{{wxTimerSecond==''?0:wxTimerSecond-1}}秒
 </text>
-  <view class="animated bounceInDown" style="width:90%;margin-top: 20px;">
-    <text style='font-family: arial, sans-serif;color: #126399;font-size: 22px;font-weight: bold;'> {{qContent}}</text>  
+  <view style="width:90%;margin-top: 20px;">
+    <text style='font-family: arial, sans-serif;color: #126399;font-size: 19px;font-weight: bold;'> {{qContent}}</text>  
   </view>
 
   <view style='width:90%;' wx:for="{{options}}" wx:key='index' wx:for-item='i'>

@@ -12,9 +12,15 @@
 
   <!--<view id='tapDemo' bindtap='bindViewDemo'> demoPage</view>-->
   <view class="usermotto">
-    <label><text class="user-motto">{{motto}}</text> <input name='input' placeholder='姓名'/></label>
+    <label><text class="user-motto">{{motto}}</text> <input name='input' placeholder='姓名' value='{{userName}}' bindinput ="userNameInput" disabled='{{enable}}'/></label>
   </view>
-
+  <view >  
+    <modal title="" hidden="{{confirm}}" confirm-text="确定"  
+      cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">  
+      姓名输入后将无法改变，是否继续？
+    </modal>  
+  </view> 
+  
  <view class="usermotto">
     <button class='btn-area' form-type='submit' bindtap='bindViewCountdown'>参与</button>
   </view>

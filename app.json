@@ -1,10 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/ending/ending",
+    "pages/question/question",
     "pages/countdown/countdown",
-    
-    "pages/question/question"
+    "pages/ending/ending"
   ],
   "window": {
     "backgroundTextStyle": "light",

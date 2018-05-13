@@ -5,7 +5,10 @@ const app = getApp()
 Page({
   data: {
     motto: '请输入真实姓名：',
-    userInfo: {}
+    userInfo: {},
+    userName:"",
+    enable:"",
+    confirm: true
   },
   //事件处理函数
   bindViewTap: function() {
@@ -20,16 +23,79 @@ Page({
     })
   },
 
-  bindViewCountdown: function () {
-    wx.redirectTo({
+  userNameInput:function(e){
+    this.setData({
+      userName: e.detail.value
+    })
+  },
+
+  modalBindcancel: function () {
+    this.setData({
+      confirm: !this.data.confirm,
+    })
+  },  
+
+  modalBindaconfirm: function () {
+    
+    this.setData({
+      confirm: !this.data.confirm,
+    })
+    
+    this.goCountdown()
+  },  
+  
+  goCountdown:function(){
+    
+    wx.request({
+      url: 'https://119759737.fxdafuweng.club/weapp/addUser',
+      data: {          //参数为json格式数据
+        userName: this.data.userName,
+      },
+      header: {
+        //设置参数内容类型为json
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.data.msg == undefined) {
+          console.log("error!")
+        } else {
+          var userInfo = res.data.data.msg;
+          wx.setStorageSync('myInfo', userInfo)
+        }
+      }
+    })
+    wx.navigateTo({
       url: '../countdown/countdown',
     })
   },
 
+  bindViewCountdown: function () {
+
+    if (this.data.userName.trim() == '') {
+      wx.showToast({ title: '请输入真实姓名', duration: 2000 })
+      setTimeout(function () { wx.hideToast() }, 2000)
+      return
+    }
+    if (this.data.enable == '') {
+      this.setData({
+        confirm: !this.data.confirm
+      }) 
+    }else{
+      this.goCountdown()
+    }
+  },
+
   onLoad: function (e) {
-  
+    if(wx.getStorageSync('myInfo')!=''){
+      
+      var myInfo = wx.getStorageSync('myInfo')
+      console.info(myInfo)
+      this.setData({
+        userName: myInfo.name,
+        enable:true
+      })
+    }
     if (wx.getStorageSync('started')!="") {
-     
       wx.redirectTo({
         url: '../ending/ending',
       })
