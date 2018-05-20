@@ -9,7 +9,7 @@ Page({
   data: {
     clock: (wx.getStorageSync('qinterval')+1),
     ischecked:'',
-    questions: wx.getStorageSync('questionList'),
+    questions: '',
     qContent:'',
     options:['A','B','C','D'],
     F:'W',
@@ -22,8 +22,6 @@ Page({
     activeCount:''
   },
 
- 
-  
   click: function(args){
     this.setData({
       selectedIndex: args.currentTarget.dataset.index,
@@ -64,6 +62,16 @@ Page({
           if (wx.getStorageSync('endInd') == '1') {
             console.log('no more count')
             wx.setStorageSync('endInd', '')
+            // var name = wx.getStorageSync('myInfo').name
+            // wx.request({
+            //   url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
+            //   data: {          //参数为json格式数据
+            //     userName: name,
+            //     status: 0,
+            //   },
+            //   success: function (res) {
+            //   }
+            // })
             wx.redirectTo({
               url: '../ending/ending',
             })
@@ -77,6 +85,14 @@ Page({
         },
         interval: this.data.clock -1,
         intervalFn: function () {
+          wx.request({
+            url: 'https://119759737.fxdafuweng.club/weapp/activeUser',
+            success: function (res) {
+              that.setData({
+                activeCount: res.data.data.msg[0].count
+              })
+            }
+          })
           if (wx.getStorageSync('exit', 1)){
             wxTimer1.stop()
           }
@@ -86,7 +102,6 @@ Page({
           }else{
             wx.removeStorageSync('firstInterval');
           }
-          console.log('color is ' + that.data.finalColor)
           if (that.data.ischecked == 'true' && that.data.selectedIndex == that.data.F) {
             that.setData({
               finalColor: 'background-color:greenyellow'

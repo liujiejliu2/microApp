@@ -95,6 +95,16 @@ Page({
       beginTime: this.data.clock,
       name: 'countDown',
       complete: function () {
+        var name = wx.getStorageSync('myInfo').name
+        wx.request({
+          url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
+          data: {          //参数为json格式数据
+            userName: name,
+            status: 1,
+          },
+          success: function (res) {
+          }
+        })
         wx.redirectTo({
           url: '../question/question?id=1',
         })
@@ -147,6 +157,7 @@ Page({
   },
   onShow:function(){
     var current = this;
+    wx.removeStorageSync('questionList');
     wx.request({
       url: 'https://119759737.fxdafuweng.club/weapp/getSchedule',
       success: function (res) {
@@ -173,17 +184,6 @@ Page({
             myTimer.stop()
           }
           current.countNow()
-
-          var name = wx.getStorageSync('myInfo').name
-          wx.request({
-            url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
-            data: {          //参数为json格式数据
-              userName: name,
-              status: 1,
-            },
-            success: function (res) {
-            }
-          })
           wx.request({
             url: 'https://119759737.fxdafuweng.club/weapp/getQuestions',
 
@@ -199,10 +199,6 @@ Page({
         }
       }
     })
-    // if (myTimer!=undefined){
-    //   myTimer.stop()
-    //   this.countNow()
-    // }
   },
 
   imageLoad: function (e) {

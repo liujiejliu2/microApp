@@ -1,5 +1,5 @@
  <view wx:if="{{prepare}}" class="page_gogo">
-  <text style="display: block;text-align: center;font-size: 30px;color:#00FA9A;position:fixed;left:12%;top:82%;">
+  <text style="display: block;text-align: center;font-size: 55rpx;color:#00FA9A;position:fixed;left:15%;top:82%;">
   最终倒计时：{{wxTimerSecond}} 秒
   </text>
  </view> 
@@ -8,13 +8,13 @@
   <image src="../pic/rule.png" bindLoad="imageLoad" mode="aspectFit"/> 
   
   <view>
-  <text style="display: block;text-align: center;font-size: 20px;color: #f60;">
+  <text style="display: block;text-align: center;font-size: 45rpx;color: #f60;">
       活动开始倒计时：{{wxTimer}}
   </text>
   </view>
 
   <view >
-  <text style="display: block;text-align: left;font-size: 14px;color: #4C0044;margin-top: 10px;padding-left : 30px;padding-right : 30px;">
+  <text style="display: block;text-align: left;font-size: 28rpx;color: #4C0044;margin-top: 10rpx;padding-left : 30rpx;padding-right : 30rpx;">
       比赛规则：
       本场比赛共{{qsize}}道题,每题答题时间为{{qinterval}}秒，答错或者不答都视为答错，至多允许答错一题。参赛者答错第二题将自动出局。
       坚持到答对最后一题的全部参与者瓜分本场奖金{{bouns}}元。

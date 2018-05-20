@@ -6,7 +6,6 @@ Page({
     groupUrl:''
   },
   previewImage:function(){
-    console.info(1112)
     wx.previewImage({
       urls: [this.data.groupUrl],
     })

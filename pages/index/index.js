@@ -45,7 +45,6 @@ Page({
   },  
   
   goCountdown:function(){
-    
     wx.request({
       url: 'https://119759737.fxdafuweng.club/weapp/addUser',
       data: {          //参数为json格式数据

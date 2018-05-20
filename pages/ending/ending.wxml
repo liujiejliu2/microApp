@@ -5,28 +5,25 @@
 <view class="bg" >
   <image src="../pic/final.png" />
   <view wx:if="{{isAlive==1}}" >
-    <view  style="font-size: 14px;color: 	#32CD32;padding-left : 30px; font-weight:bold;padding-right : 30px; etter-spacing:5px">
+    <view  style="font-size: 14px;color: 	#32CD32;padding-left : 30rpx; font-weight:bold;padding-right : 30rpx; etter-spacing:5rpx">
       <text>恭喜你通关本次知识竞赛！</text>
     </view>
-    <view  style="font-size: 14px;color: 	#32CD32;padding-left : 30px; font-weight:bold;padding-right : 30px; etter-spacing:5px">
-      <text>本场奖金：{{mybonus}}元</text>
-    </view>
-    <view  style="font-size: 14px;color: 	#32CD32;padding-left : 30px; font-weight:bold;padding-right : 30px; etter-spacing:5px">
+    <view  style="font-size: 13px;color: 	#32CD32;padding-left : 30rpx; font-weight:bold;padding-right : 30rpx; etter-spacing:5rpx">
       <text>请扫描二维码进群拿钱</text>
     </view>
-    <view  style="font-size: 17px;color: 	#32CD32;padding-left : 40px; font-weight:bold;padding-right : 30px; etter-spacing:5px">
+    <view  style="font-size: 17rpx;color: 	#32CD32;padding-left : 40rpx; font-weight:bold;padding-right : 30rpx; etter-spacing:5px">
       <image style="width:{{imgwidth}}rpx; height:{{imgheight }}rpx;" bindload="imageLoad" bindtap="previewImage" mode="aspectFit" src="{{groupUrl}}" mode="aspectFill">  
       </image> 
     </view>
   </view>
-  <view wx:elif="{{isAlive==0}}" style="font-size: 17px;color: #DAA520;padding-left : 30px; font-weight:bold;padding-right : 30px; etter-spacing:5px;">
+  <view wx:elif="{{isAlive==0}}" style="font-size: 17px;color: #DAA520;padding-left : 30rpx; font-weight:bold;padding-right : 30rpx; etter-spacing:5px;">
     <text>很遗憾没能通关，再接再厉！</text>
   </view>
-  <view style="font-size: 14px;color: #4C0044;padding-left : 30px; font-weight:bold;padding-right : 30px; etter-spacing:5px;">
+  <view style="font-size: 28rpx;color: #4C0044;padding-left : 30rpx; font-weight:bold;padding-right : 30rpx; etter-spacing:5rpx;">
   <text >
     本场积分：{{finalScore}}分, 累计积分：{{finalScore}}分 
-    
-  </text><button style='background-color: honeydew' bindtap='goback'>返回首页</button>
+  
+  </text><button style='background-color: honeydew;font-size: 25rpx;' bindtap='goback'>返回首页</button>
    
   </view>
   

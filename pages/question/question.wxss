@@ -7,28 +7,28 @@
   text-align: left;
   /* font-size: 15px;
   color: #3333CC; */
-  margin-top: 30px;
-  margin-left: 30px;
+  margin-top: 40rpx;
+  margin-left: 30rpx;
   background-color: honeydew;
   
   background: #599bb3;
    -webkit-border-radius: 28;
   -moz-border-radius: 28;
-  border-radius: 28px;
-  text-shadow: 0px 1px 0px #3d768a;
-  -webkit-box-shadow: -12px 8px 11px -4px #276873;
-  -moz-box-shadow: -12px 8px 11px -4px #276873;
-  box-shadow: -12px 8px 11px -4px #276873; 
+  border-radius: 28rpx;
+  text-shadow: 0rpx 1rpx 0rpx #3d768a;
+  -webkit-box-shadow: -12rpx 8rpx 11rpx -4rpx #276873;
+  -moz-box-shadow: -12rpx 8rpx 11rpx -4rpx #276873;
+  box-shadow: -12rpx 8rpx 11rpx -4rpx #276873; 
   font-family: Arial;
   color: #ffffff;
-  font-size: 13px;
-  padding: 9px 27px 9px 27px;
-  border: solid #1f628d 1px;
+  font-size: 28rpx;
+  padding: 9rpx 27rpx 9rpx 27rpx;
+  border: solid #1f628d 1rpx;
   text-decoration: none;
 }
 
 .is_checked{  
-  border: 1px solid #FE0002 ;  
+  border: 1rpx solid #FE0002 ;  
   color: #FE0002 ;  
   background: #fff;  
 }  
@@ -42,14 +42,14 @@
   display: block;
   text-align: 
   left;font-size: 
-  20px;color: #000055;
-  margin-top: 50px;
-  margin-left: 20px;
+  20rpx;color: #000055;
+  margin-top: 50rpx;
+  margin-left: 20rpx;
 }
 .back{
   width: 85%;
   align-items: baseline;
-  margin-top: 10px;
+  margin-top: 10rpx;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
