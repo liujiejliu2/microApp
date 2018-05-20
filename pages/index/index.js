@@ -85,6 +85,7 @@ Page({
   },
 
   onLoad: function (e) {
+    
     if(wx.getStorageSync('myInfo')!=''){
       
       var myInfo = wx.getStorageSync('myInfo')

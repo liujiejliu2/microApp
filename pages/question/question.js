@@ -47,6 +47,7 @@ Page({
       success: function (res) {
       }
     })
+    wx.setStorageSync('endInd', '1')
     console.info('hide');
     wx.redirectTo({
       url: '../ending/ending',
@@ -169,8 +170,7 @@ Page({
         ischecked: '',
       })
     }
-    this.timerCount(this);
-  
+    
     var current=this
     //获取当前存活玩家
     wx.request({
@@ -206,6 +206,7 @@ Page({
     if ((wx.getStorageSync('questionIndex') + 1) == this.data.questions.length){
       wx.setStorageSync('endInd','1')
     } 
+    this.timerCount(this);
   },
    
 })
