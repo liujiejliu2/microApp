@@ -63,16 +63,6 @@ Page({
           if (wx.getStorageSync('endInd') == '1') {
             console.log('no more count')
             wx.setStorageSync('endInd', '')
-            // var name = wx.getStorageSync('myInfo').name
-            // wx.request({
-            //   url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
-            //   data: {          //参数为json格式数据
-            //     userName: name,
-            //     status: 0,
-            //   },
-            //   success: function (res) {
-            //   }
-            // })
             wx.redirectTo({
               url: '../ending/ending',
             })

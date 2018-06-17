@@ -96,13 +96,20 @@ Page({
       name: 'countDown',
       complete: function () {
         var name = wx.getStorageSync('myInfo').name
+        var myscore = wx.setStorageSync('myscore', myscore);
+        console.log("myscore is " + myscore)
+        if(myscore==undefined){
+          myscore=0;  
+        }
         wx.request({
           url: 'https://119759737.fxdafuweng.club/weapp/disableUser',
           data: {          //参数为json格式数据
             userName: name,
             status: 1,
+            score: myscore
           },
           success: function (res) {
+            wx.removeStorageSync('myscore');
           }
         })
         wx.redirectTo({
@@ -114,6 +121,8 @@ Page({
   },
   
   countNow:function(){
+    var myscore = wx.setStorageSync('myscore', myscore);
+    console.log("myscore is " + myscore)
     var timelineStr = this.data.startTime
     var splitTime = timelineStr.split(" ");
     var arr1 = splitTime[1].split(":");
